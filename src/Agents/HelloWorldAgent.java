@@ -1,4 +1,4 @@
-package teste;
+package Agents;
 
 import jadex.micro.annotation.Agent;
 import jadex.micro.annotation.AgentBody;
