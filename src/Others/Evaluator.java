@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public interface Evaluator {
 	
-	void setDemand(Bid demand);
-	Bid evaluate(ArrayList<Bid> bids);
+	
+	void setDemand(QuotationQuestion question);
+	QuotationQuestion getDemand();
+	int evaluate(ArrayList<Bid> bids);
 
 }

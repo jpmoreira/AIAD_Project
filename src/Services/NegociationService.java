@@ -1,10 +1,13 @@
 package Services;
 
+import jadex.commons.future.IFuture;
+
 import Others.Evaluator;
+import Others.SealedProposal;
 
 
 public interface NegociationService {
 	
-	void startNegociation(Evaluator ev);
+	IFuture<SealedProposal> startNegociation(Evaluator ev);
 
 }
