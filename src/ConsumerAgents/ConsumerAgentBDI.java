@@ -55,7 +55,6 @@ public class ConsumerAgentBDI extends MarketAgent{
 	
 	@Agent
 	protected BDIAgent agent;
-
 	
 	static final int updateTime=1000;
 	

@@ -33,9 +33,6 @@ public class ContractNetNegotiationService implements NegociationService{
 	
 	@Override
 	public IFuture<SealedProposal> startNegociation(Evaluator ev) {
-		
-		
-		System.out.println(agent.getComponentIdentifier().getLocalName()+" was asked to start negotiating");
 	
 		
 		return bestSuitedAgent(ev);
@@ -58,8 +55,9 @@ public class ContractNetNegotiationService implements NegociationService{
 			return futureVendorAgent;
 			
 		}
+
 		
-		IFuture<Collection<SellingService>> fut=agent.getServiceContainer().getRequiredServices("sellingService");
+		IFuture<Collection<SellingService>> fut=agent.getServiceContainer().getRequiredServices("SellingService");
 		
 		
 		fut.addResultListener(new IResultListener<Collection<SellingService>>() {
@@ -67,21 +65,29 @@ public class ContractNetNegotiationService implements NegociationService{
 			@Override
 			public void exceptionOccurred(Exception arg0) {
 				
-				
+				System.out.println("found an error: "+arg0);
 			}
 
 			@Override
 			public void resultAvailable(Collection<SellingService> arg0) {
 				
+				System.out.println("result available");
 				ArrayList<Bid> bids=new ArrayList<Bid>();
 				Iterator<SellingService> it=arg0.iterator();
-				bids.add(it.next().bidForQuestion(ev.getDemand()));
+				
+				
+				System.out.println("found "+arg0.size()+" suited candidates");
+				while(it.hasNext()){
+					bids.add(it.next().bidForQuestion(ev.getDemand()));
+				}
+				
 				
 				int pos=ev.evaluate(bids);
 				SellingService[] sellingAgentsArray=(SellingService[]) arg0.toArray();
 				
 				
 				SealedProposal p=new SealedProposal((VendorAgentBDI) sellingAgentsArray[pos],bids.get(pos));
+				System.out.println("sealed proposal");
 				futureVendorAgent.setResult(p);
 				
 
